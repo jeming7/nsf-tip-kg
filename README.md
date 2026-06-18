@@ -5,7 +5,7 @@ Technology, Innovation and Partnerships (TIP). It maps 58 programs and the relat
 them — directed pathways, program families, shared operational attributes, shared funded
 researchers, and more — where **every connection traces to a checkable NSF source**.
 
-**Live site:** _enabled via GitHub Pages (see below)._
+**Live site:** https://jeming7.github.io/nsf-tip-kg/
 
 ## What's here
 
