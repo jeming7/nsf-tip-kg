@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>NSF TIP Knowledge Graph — Guide</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style>
+    :root { --ink:#1a2230; --muted:#5b6675; --line:#e3e8ef; --accent:#1f6feb; --bg:#ffffff; }
+    html { -webkit-text-size-adjust:100%; }
+    body{ max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 5rem;
+          font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+          color:var(--ink); background:var(--bg); }
+    .topnav{ margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid var(--line); font-size:.95rem; }
+    .topnav a{ color:var(--accent); text-decoration:none; font-weight:600; }
+    .topnav a:hover{ text-decoration:underline; }
+    h1.title{ display:none; }
+    h1{ font-size:1.9rem; line-height:1.25; margin:.2rem 0 1rem; letter-spacing:-.01em; }
+    h2{ font-size:1.35rem; margin:2.4rem 0 .8rem; padding-top:.4rem; border-top:1px solid var(--line); }
+    h3{ font-size:1.08rem; margin:1.6rem 0 .5rem; color:#26324a; }
+    p,li{ color:var(--ink); }
+    a{ color:var(--accent); }
+    hr{ border:none; border-top:1px solid var(--line); margin:2.2rem 0; }
+    table{ border-collapse:collapse; width:100%; margin:1rem 0; font-size:.93rem; }
+    th,td{ border:1px solid var(--line); padding:.5rem .65rem; text-align:left; vertical-align:top; }
+    th{ background:#f4f7fb; font-weight:600; }
+    code{ background:#f1f3f7; padding:.12em .4em; border-radius:4px; font-size:.88em;
+          font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    pre{ background:#0f1626; color:#e6edf6; padding:1rem 1.1rem; border-radius:8px; overflow-x:auto; }
+    pre code{ background:none; color:inherit; padding:0; }
+    blockquote{ border-left:3px solid var(--accent); margin:1rem 0; padding:.2rem 1rem; color:var(--muted); }
+    .footer{ margin-top:4rem; padding-top:1.2rem; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; }
+  </style>
+</head>
+<body>
+<div class="topnav"><a href="index.html">&larr; Home</a> &nbsp;·&nbsp; <a href="graph.html">Explore the interactive graph &rarr;</a></div>
+<header id="title-block-header">
+<h1 class="title">NSF TIP Knowledge Graph — Guide</h1>
+</header>
+<h1
+id="nsf-tip-programs-knowledge-graph-a-guide-to-the-tool-and-how-to-read-it">NSF
+TIP Programs Knowledge Graph — A Guide to the Tool and How to Read
+It</h1>
+<p><strong>What this document is:</strong> a plain-language guide to the
+interactive NSF TIP Knowledge Graph
+(<code>TIP_Knowledge_Graph.html</code>). It explains what you are
+looking at, what every control on the screen does, and how to use the
+tool to answer real questions. You do not need any technical background
+to follow it. Open the HTML file in any web browser; it is one
+self-contained file and needs no internet connection.</p>
+<hr />
+<h2 id="what-the-knowledge-graph-is-in-one-minute">1. What the Knowledge
+Graph is, in one minute</h2>
+<p>The NSF Directorate for Technology, Innovation and Partnerships (TIP)
+runs dozens of programs. It is hard to see, at a glance, how they relate
+— which ones feed into each other, which fund the same researchers,
+which serve the same kinds of organizations. This tool turns that mess
+into a visualization you can explore.</p>
+<ul>
+<li>Every <strong>circle/node</strong> is a program.</li>
+<li>Every <strong>line/edge</strong> between two circles means “these
+two programs are related,” and the <strong>color of the line tells you
+<em>why</em>.</strong></li>
+<li>Some edges are <strong>arrows</strong> — those show a
+<em>direction</em>: program A leads into program B.</li>
+<li>The <strong>controls on the left</strong> let you filter, search,
+and switch between different ways of looking at the same graph.</li>
+<li>The <strong>panel on the right</strong> shows the details of
+whatever circle or line you click.</li>
+</ul>
+<p>It is one connected graph. The most important design choice:
+<strong>the view leads with operational and structural
+relationships</strong> — how programs actually connect — and keeps
+looser “these sound similar” relationships available but turned off
+until you ask for them.</p>
+<hr />
+<h2 id="what-is-in-the-graph">2. What is in the graph</h2>
+<p><strong>58 programs in total</strong>, in two tiers:</p>
+<ul>
+<li><strong>41 TIP-led programs</strong> — the programs TIP actually
+runs. These are the colored circles and the focus of the tool.</li>
+<li><strong>17 cross-directorate “context” programs</strong> — programs
+like GRFP, REU, CAREER, and MRI that appear in TIP’s funding feed but
+are run by other parts of NSF. They are included for context but
+<strong>de-emphasized</strong>: smaller, gray, dashed circles,
+<strong>hidden until you ask for them.</strong></li>
+</ul>
+<p>The 41 TIP-led programs are grouped by TIP’s three strategies, plus a
+cross-cutting group:</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Meaning</th>
+<th>Circle color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strategy 1</td>
+<td>Accelerate critical and emerging technology</td>
+<td>Blue</td>
+</tr>
+<tr>
+<td>Strategy 2</td>
+<td>Expand the geography of innovation</td>
+<td>Green</td>
+</tr>
+<tr>
+<td>Strategy 3</td>
+<td>Build a competition-ready workforce</td>
+<td>Orange</td>
+</tr>
+<tr>
+<td>Cross-cutting</td>
+<td>Spans more than one strategy</td>
+<td>Brown</td>
+</tr>
+<tr>
+<td>Context</td>
+<td>Cross-directorate, not TIP-led</td>
+<td>Gray (dashed)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="what-the-connecting-lines-mean">3. What the connecting lines
+mean</h2>
+<p>A line means two programs are related, and its <strong>color says
+why</strong>. There are seven kinds, deliberately split into two groups.
+<strong>A connection is never a hunch — every line traces to a specific,
+checkable source, and you can click any line to read it.</strong></p>
+<h3 id="group-a-operational-structural-shown-by-default">Group A —
+Operational &amp; structural (shown by default)</h3>
+<p>These describe how programs are <em>actually</em> connected.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Color</th>
+<th>Kind</th>
+<th>What it means</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blue <strong>arrow</strong></td>
+<td><strong>Directed pathway</strong></td>
+<td>One program <em>leads into</em> another (a real, one-way
+dependency)</td>
+<td>I-Corps Teams → PFI (PFI supports proof-of-concept work by I-Corps
+participants); SBIR/STTR → Test Bed (Test Bed is open to SBIR
+awardees)</td>
+</tr>
+<tr>
+<td>Pink</td>
+<td><strong>Program family / lineage</strong></td>
+<td>One program is part of, or grew out of, another</td>
+<td>I-Corps Teams ↔︎ Hubs; POSE → PESOSE</td>
+</tr>
+<tr>
+<td>Red</td>
+<td><strong>Solicitation reference</strong></td>
+<td>One program’s official announcement <em>names</em> the other</td>
+<td>PESOSE’s announcement references the security of open-source
+ecosystems (Safe-OSE)</td>
+</tr>
+<tr>
+<td>Orange</td>
+<td><strong>Operational attribute</strong></td>
+<td>The two programs share a <em>specific</em> operational feature</td>
+<td>both require an industrial partner; both serve MSIs; both are Ideas
+Labs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="group-b-similarity-discovery-off-by-default">Group B —
+Similarity &amp; discovery (off by default)</h3>
+<p>These are looser “they resemble each other” signals — useful for
+exploration, but not evidence of an operational link. Turn them on with
+the checkboxes when you want them.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Color</th>
+<th>Kind</th>
+<th>What it means</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Purple</td>
+<td><strong>Award co-occurrence</strong></td>
+<td>The two programs funded the <strong>same
+people/institutions</strong></td>
+<td>I-Corps and PFI share 60 lead researchers</td>
+</tr>
+<tr>
+<td>Teal</td>
+<td><strong>Text similarity</strong></td>
+<td>Their announcements use <strong>similar language</strong></td>
+<td>POSE and Safe-OSE both center on open-source ecosystems</td>
+</tr>
+<tr>
+<td>Cyan</td>
+<td><strong>Shared technology domain</strong></td>
+<td>Both work in the same technology area</td>
+<td>Breaking Low and VINES both work on advanced wireless</td>
+</tr>
+</tbody>
+</table>
+<p>Two visual cues on every line: <strong>thickness = strength</strong>
+(a higher score; see Section 4), and <strong>color = the strongest
+evidence</strong> when a pair has more than one kind (click to see them
+all). Directed pathways are the exception — they are drawn as arrows and
+kept separate (Section 4).</p>
+<hr />
+<h2 id="the-synergy-score-and-the-directed-pathways">4. The “synergy
+score” and the directed pathways</h2>
+<p>Most lines carry a <strong>synergy score</strong> from 0 to 1. A
+higher score means <strong>more independent kinds of evidence point the
+same way</strong> — not that any single link is ironclad.</p>
+<p>The score combines evidence with <strong>diminishing
+returns</strong>: each extra signal raises it, but by less each time, so
+no single signal dominates. This is the standard
+<strong>noisy-OR</strong> rule for fusing independent evidence — the
+score is one minus the product of each layer’s “miss” (1 − weight),
+i.e. the chance that <em>at least one</em> of the signals is real (see
+Judea Pearl, <em>Probabilistic Reasoning in Intelligent Systems</em>,
+1988, §4.3). It assumes the layers are roughly independent — an
+approximation here — so the number is best read as a <em>ranking</em>,
+not a literal probability. Click a line and the right panel shows the
+exact arithmetic, e.g.:</p>
+<pre><code>score = 1 − (1 − 0.26) × (1 − 0.216) × (1 − 0.155) = 0.51</code></pre>
+<p><strong>Read the per-layer confidence (High / Medium / Low) over the
+decimal.</strong> A tidy “0.51” can come from three weak hints that
+happen to agree; the panel always breaks it down so you are not
+misled.</p>
+<p><strong>Directed pathways work differently.</strong> Because a
+pathway is inherently one-way (A leads into B), it is
+<strong>not</strong> folded into the two-way score. Each pathway is its
+own blue arrow, scored by the confidence of its quoted evidence, and
+drawn <strong>solid for high-confidence, dashed for medium</strong>.</p>
+<hr />
+<h2 id="lifecycle-and-provenance-where-each-program-stands-today">5.
+Lifecycle and provenance (where each program stands today)</h2>
+<p>Click a program and you get a <strong>lifecycle badge</strong> that
+tells you its current funding state and where the evidence came from —
+without opening any web page. Across the 58 programs:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Lifecycle status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open solicitation</td>
+<td>An active solicitation is accepting proposals (badge shows the NSF
+number and next deadline)</td>
+</tr>
+<tr>
+<td>Between cycles</td>
+<td>The solicitation expired and is awaiting reissue, or is closed to
+new proposals</td>
+</tr>
+<tr>
+<td>Archived solicitation</td>
+<td>A past solicitation, no longer active</td>
+</tr>
+<tr>
+<td>Dear Colleague Letter</td>
+<td>The program operates via a DCL rather than a full solicitation</td>
+</tr>
+<tr>
+<td>Initiative / program page</td>
+<td>Described on an NSF initiative page; no standalone solicitation</td>
+</tr>
+<tr>
+<td>No standalone solicitation</td>
+<td>A pilot, roadmap effort, or partner-operated challenge with no NSF
+solicitation</td>
+</tr>
+</tbody>
+</table>
+<p>The badge also shows a <strong>provenance line</strong> (“3 source
+documents · authority: NSF” or “· source: external partner/operator”),
+so you always know whether a program’s information comes from NSF itself
+or an outside operator. You can filter the whole graph by lifecycle
+status (Section 6).</p>
+<hr />
+<h2 id="the-control-panel-on-the-left-top-to-bottom">6. The control
+panel on the left, top to bottom</h2>
+<p>Everything here changes <em>what is shown</em>, never the underlying
+data.</p>
+<h3 id="search-box">Search box</h3>
+<p>Type a program name, acronym, technology, or source. The graph
+narrows to matches. <em>Example:</em> <code>quantum</code>, or
+<code>wireless</code> to find Breaking Low and VINES.</p>
+<h3 id="tip-strategy-drop-down">“TIP strategy” drop-down</h3>
+<p>Show only one strategy (Accelerate Technology / Expand Ecosystems /
+Build Workforce) or Cross-cutting. <em>Example:</em> <strong>Strategy
+3</strong> isolates the workforce programs.</p>
+<h3 id="domain-drop-down">“Domain” drop-down</h3>
+<p>Filter to one of the tool’s descriptive technology tags.
+<em>Example:</em> <strong>Open-Source Ecosystems</strong> → POSE,
+PESOSE, Safe-OSE.</p>
+<h3 id="key-technology-area-statutory-10-drop-down">“Key Technology Area
+(statutory 10)” drop-down</h3>
+<p>Filter to one of the <strong>10 official Key Technology
+Areas</strong> from the CHIPS and Science Act (Artificial Intelligence;
+Advanced Computing and Semiconductors; Quantum Information Science and
+Technology; Robotics and Advanced Manufacturing; Disaster Prevention and
+Mitigation; Advanced Communications; Biotechnology; Data and
+Cybersecurity; Advanced Energy and Industrial Efficiency Technologies;
+Advanced Materials). The government-defined view of which technology
+each program serves.</p>
+<h3 id="lifecycle-status-drop-down">“Lifecycle status” drop-down</h3>
+<p>Filter by funding state — e.g., show only programs with an
+<strong>Open solicitation</strong>, or only <strong>Archived</strong>
+ones. (See Section 5.)</p>
+<h3 id="minimum-synergy-score-slider-default-0.35">“Minimum synergy
+score” slider (default 0.35)</h3>
+<p>Hides lines weaker than the value set. Drag <strong>right</strong>
+for only the strongest relationships; <strong>left</strong> (toward
+0.15) to reveal weaker, more speculative ones.</p>
+<h3 id="relationship-evidence-check-boxes">“Relationship evidence”
+check-boxes</h3>
+<p>Turn each line type on or off. <strong>On by default</strong> (the
+operational/structural group): Directed pathways, Program family /
+lineage, Solicitation references, Operational attributes. <strong>Off by
+default</strong> (the discovery group): Award co-occurrence, Text
+similarity, Shared technology domain. <em>Example:</em> to see only
+proven directional links, leave <strong>Directed pathways</strong> on
+and uncheck the rest.</p>
+<h3 id="program-display-check-boxes">“Program display” check-boxes</h3>
+<ul>
+<li><strong>Show cross-directorate context programs</strong> — brings in
+the 17 gray, dashed non-TIP programs.</li>
+<li><strong>Mute high-volume programs (SBIR/STTR, I-Corps, PFI)</strong>
+— hides the three giants so smaller programs’ connections stand
+out.</li>
+<li><strong>Show Key Technology Area hubs (statutory 10)</strong> — adds
+10 gold triangle hubs; programs cluster around the KTAs they serve.</li>
+<li><strong>Show domain, strategy, and stage hubs</strong> — adds the
+descriptive grouping nodes.</li>
+</ul>
+<h3 id="fit-and-pause-physics-buttons">“Fit” and “Pause physics”
+buttons</h3>
+<p><strong>Fit</strong> re-centers and zooms to the whole graph.
+<strong>Pause physics</strong> freezes the gentle auto-arranging motion
+(it settles and freezes on its own a second after loading).</p>
+<h3 id="legend-and-network-summary">Legend and “Network” summary</h3>
+<p>The legend is the color key for the seven line types, the gold KTA
+hubs, and the gray context programs. The summary gives a live count of
+visible programs, visible lines, and their average score as you
+filter.</p>
+<hr />
+<h2 id="the-detail-panel-on-the-right">7. The detail panel on the
+right</h2>
+<p><strong>Click a program (circle):</strong> full name; strategy or
+context status; whether it is high-volume; its <strong>lifecycle +
+provenance badge</strong>; its <strong>Key Technology Areas</strong>
+(gold pills, or “Cross-cutting — no single statutory KTA”); its
+descriptive domains; its sources with clickable links; notes; and a
+ranked list of its <strong>top relationships</strong>.</p>
+<p><strong>Click a relationship (line):</strong> the two programs; the
+synergy score; the <strong>plain-English explanation of how that score
+was computed</strong> (the formula with the numbers filled in); and
+<strong>each piece of evidence by layer</strong> — its kind, weight,
+confidence, and the underlying detail (e.g., “Shared PIs/CoPIs: 4;
+shared institutions: 12,” or the exact quoted sentence). For a
+<strong>directed pathway</strong>, the panel states the direction and
+shows the quote, and notes that the arrow exists only because the row
+was accepted during curation.</p>
+<hr />
+<h2 id="worked-examples-answering-real-questions">8. Worked examples —
+answering real questions</h2>
+<ul>
+<li><strong>“Trace the translation pathway.”</strong> Leave
+<strong>Directed pathways</strong> on (uncheck the others if you like).
+The arrows show the real, evidence-backed flow — e.g., I-Corps Teams →
+PFI, I-Corps Teams → Translation to Practice, SBIR/STTR → Test Bed.</li>
+<li><strong>“Which programs have an open solicitation right
+now?”</strong> Set <strong>Lifecycle status</strong> to <em>Open
+solicitation</em>.</li>
+<li><strong>“Which programs require an industrial partner?”</strong>
+Turn on <strong>Operational attributes</strong> and look for the orange
+links (or click a program and read its relationships).</li>
+<li><strong>“Which programs work on quantum?”</strong> Set <strong>Key
+Technology Area</strong> to <em>Quantum Information Science and
+Technology</em> (NQVL, Quantum + X; QLCI too if the context tier is
+on).</li>
+<li><strong>“Show the smaller programs without the giants
+dominating.”</strong> Check <strong>Mute high-volume
+programs</strong>.</li>
+<li><strong>“What sounds similar even if not formally linked?”</strong>
+Turn on <strong>Text similarity</strong> and <strong>Shared technology
+domain</strong> and lower the score slider.</li>
+</ul>
+<hr />
+<h2 id="where-the-information-comes-from-so-you-can-trust-it">9. Where
+the information comes from (so you can trust it)</h2>
+<p>Every connection is grounded in NSF’s own materials, not opinion:</p>
+<ul>
+<li><strong>Directed pathways</strong> are curated one by one from
+explicit solicitation language (e.g., “open to current and former
+SBIR/STTR awardees”); each carries a verbatim quote and was accepted by
+a reviewer. No quote, no arrow.</li>
+<li><strong>Operational attributes</strong> come from structured fields
+extracted from the full solicitation pages (eligibility, required
+partners, tracks/phases, target audience).</li>
+<li><strong>Family / lineage</strong> comes from the documented
+structure of the programs.</li>
+<li><strong>Solicitation references</strong> are quotations from the
+official announcements.</li>
+<li><strong>Award co-occurrence</strong> comes from NSF’s award
+records.</li>
+<li><strong>Text similarity</strong> compares the wording of the
+announcements.</li>
+<li><strong>Shared technology domain</strong> and the <strong>Key
+Technology Area</strong> tags come from NSF’s own technology tagging
+where available, and program descriptions otherwise.</li>
+<li><strong>Lifecycle and provenance</strong> come from the solicitation
+feed and the downloaded source pages.</li>
+</ul>
+<p>Click any line and the panel shows the specific source behind it.</p>
+<hr />
+<h2 id="things-to-keep-in-mind">10. Things to keep in mind</h2>
+<ul>
+<li>The tool is for <strong>seeing structure and ranking
+relationships</strong>, not precise measurement. Treat the score as
+“stronger vs. weaker,” and lean on the per-layer confidence.</li>
+<li><strong>The directed-pathway layer is deliberately sparse.</strong>
+Only a handful of programs have a stated one-way dependency; most do
+not. An arrow is high-signal precisely because it was only drawn where
+the text demanded it.</li>
+<li><strong>Newer programs show fewer lines.</strong> Programs without
+award history (PESOSE, VINES, AI-Ready America) can only connect through
+shared attributes, text, or domain — not shared researchers, yet.
+Absence of a line can mean “no data yet,” not “no relationship.”</li>
+<li><strong>The context (cross-directorate) tier is intentionally
+faint</strong> — there for completeness, not as the focus.</li>
+</ul>
+<hr />
+<h2 id="querying-the-graph-as-a-property-graph-lpg">11. Querying the
+graph as a property graph (LPG)</h2>
+<p>The interactive HTML is for <em>browsing</em>. The same graph is also
+exported as a true <strong>Labeled Property Graph (LPG)</strong> that
+you can <em>query</em> — to ask precise questions like “which
+open-solicitation programs serve MSIs?” or “trace everything downstream
+of I-Corps.” This is a separate set of files (<code>lpg_export/</code>),
+generated from the exact same data, so the picture and the queryable
+graph never disagree.</p>
+<h3 id="how-it-relates-to-the-visual-graph-tip_knowledge_graph.html">How
+it relates to the visual graph
+(<code>TIP_Knowledge_Graph.html</code>)</h3>
+<p>The interactive HTML and the LPG are <strong>two renderings of the
+same graph</strong>, both generated from the same source data — neither
+is built from the other. The HTML is the human/visual view; the LPG is
+the machine/queryable view.</p>
+<ul>
+<li><strong>Identical in both:</strong> the 58 programs and their
+properties, the 10 Key Technology Areas, the 4 strategies, and the seven
+typed program-to-program relationships (<code>PATHWAY</code>,
+<code>FAMILY</code>, <code>SOLICITATION_REF</code>,
+<code>OPERATIONAL</code>, <code>AWARD_COOCCURRENCE</code>,
+<code>TEXT_SIMILARITY</code>, <code>SHARED_DOMAIN</code>) with their
+evidence and confidence.</li>
+<li><strong>Different by design:</strong> the HTML <em>aggregates</em>
+all the evidence between two programs into a single drawn line (colored
+by the strongest layer) and adds visual-only grouping hubs
+(domain/stage/strategy/KTA) for layout and lenses. The LPG instead keeps
+<strong>one edge per piece of evidence</strong>, so each layer can be
+queried separately, and it promotes <strong>Document, TargetAudience,
+and RequiredPartnerType to real nodes</strong>. The LPG is therefore a
+slightly <em>richer</em> model than the picture, not a simplification of
+it.</li>
+<li><strong>Kept in sync:</strong> both regenerate from the same source
+via <code>build_semantic_network.py</code> → <code>build_lpg.py</code>,
+so the graph you browse and the graph you query are always the same
+underlying graph. (This is why, if you build an LLM or search interface,
+you point it at the LPG — the complete, typed, queryable form — while
+the HTML stays the human-facing companion.)</li>
+</ul>
+<h3 id="whats-in-the-property-graph">What’s in the property graph</h3>
+<ul>
+<li><strong>Node types:</strong> <code>Program</code> (58),
+<code>KeyTechnologyArea</code> (10), <code>Strategy</code> (4),
+<code>Document</code> (61 — the source pages; shared pages like the TIP
+“latest” page are one node many programs point to),
+<code>TargetAudience</code> (12), <code>RequiredPartnerType</code>
+(5).</li>
+<li><strong>Relationship types:</strong> the seven program-to-program
+relationships from the graph (<code>PATHWAY</code> directed,
+<code>FAMILY</code>, <code>SOLICITATION_REF</code>,
+<code>OPERATIONAL</code>, <code>AWARD_COOCCURRENCE</code>,
+<code>TEXT_SIMILARITY</code>, <code>SHARED_DOMAIN</code>), plus
+<code>HAS_KTA</code>, <code>IN_STRATEGY</code>,
+<code>HAS_DOCUMENT</code>, <code>SERVES_AUDIENCE</code>,
+<code>REQUIRES_PARTNER</code>.</li>
+<li><strong>Every relationship carries its evidence</strong> —
+<code>weight</code>, <code>confidence</code>, the evidence text, the
+<code>source_ref</code>, and a <code>review_status</code> (curated
+pathways read <code>accepted</code>; solicitation references read
+<code>validated</code>; the rest read <code>auto-extracted</code>). So a
+query result can always show <em>why</em> an edge exists and whether a
+human checked it.</li>
+</ul>
+<h3 id="two-ways-to-query-it">Two ways to query it</h3>
+<ol type="1">
+<li><strong>No installation — query right now.</strong>
+<code>python query_lpg.py demo</code> runs a showcase; or target a
+question directly:
+<ul>
+<li><code>python query_lpg.py describe PESOSE</code> — full profile,
+lifecycle, KTAs, and every relationship with its provenance</li>
+<li><code>python query_lpg.py lifecycle "Open solicitation"</code> — all
+programs with an open solicitation</li>
+<li><code>python query_lpg.py kta "Advanced Communications"</code> —
+programs in a Key Technology Area</li>
+<li><code>python query_lpg.py audience MSI</code> /
+<code>python query_lpg.py partner industrial</code> — who serves an
+audience / requires a partner type</li>
+<li><code>python query_lpg.py downstream "I-Corps Teams"</code> /
+<code>python query_lpg.py upstream PFI</code> — trace directed
+pathways</li>
+<li><code>python query_lpg.py documents "Quantum + X"</code> — a
+program’s source documents (and which it shares)</li>
+</ul></li>
+<li><strong>Full Cypher in a graph database.</strong> Copy
+<code>lpg_export/*.csv</code> into a Neo4j (or Memgraph) import folder
+and run <code>lpg_export/load_neo4j.cypher</code> (no plugins required).
+Then run real Cypher — <code>lpg_export/example_queries.cypher</code>
+has a dozen worked examples, e.g.:</li>
+</ol>
+<pre><code>MATCH (p:Program {lifecycle:&#39;Open solicitation&#39;})-[:HAS_KTA]-&gt;(:KeyTechnologyArea {name:&#39;Quantum Information Science and Technology&#39;})
+RETURN p.name;</code></pre>
+<h3 id="trusting-the-export">Trusting the export</h3>
+<p><code>python validate_lpg.py</code> runs ten offline integrity checks
+(every edge endpoint resolves, identifiers are unique, curated edges
+carry a review status, and the counts reconcile with the source data)
+before you ever load it. After loading into Neo4j,
+<code>lpg_export/validate.cypher</code> re-checks the same counts in the
+database.</p>
+<h3 id="regenerating">Regenerating</h3>
+<p>The whole chain rebuilds from source:
+<code>build_semantic_network.py</code> → <code>build_lpg.py</code> →
+<code>validate_lpg.py</code>. The browsable graph
+(<code>TIP_Knowledge_Graph.html</code>) and the queryable graph are
+always two views of one dataset.</p>
+<div class="footer">NSF TIP Knowledge Graph · an independent, evidence-backed visualization of NSF Directorate for Technology, Innovation and Partnerships programs. Every relationship traces to a checkable NSF source. Not an official NSF product.</div>
+</body>
+</html>

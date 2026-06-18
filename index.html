@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NSF TIP Knowledge Graph</title>
+<meta name="description" content="An interactive, evidence-backed knowledge graph of NSF Technology, Innovation and Partnerships (TIP) programs — every connection traces to a checkable NSF source.">
+<style>
+  :root{ --ink:#16203a; --muted:#5b6675; --line:#e3e8ef; --accent:#1f6feb; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; color:var(--ink);
+        font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        background:linear-gradient(180deg,#f7f9fc 0%,#eef3fa 100%); min-height:100vh; }
+  .wrap{ max-width:880px; margin:0 auto; padding:4.5rem 1.25rem 4rem; }
+  .eyebrow{ text-transform:uppercase; letter-spacing:.12em; font-size:.78rem; font-weight:700;
+            color:var(--accent); margin:0 0 .8rem; }
+  h1{ font-size:2.4rem; line-height:1.15; letter-spacing:-.02em; margin:0 0 1rem; }
+  .lede{ font-size:1.15rem; color:#36425c; max-width:42rem; margin:0 0 1.2rem; }
+  .stats{ display:flex; flex-wrap:wrap; gap:1.4rem; margin:1.6rem 0 2.6rem; color:var(--muted); font-size:.9rem; }
+  .stats b{ display:block; font-size:1.5rem; color:var(--ink); font-weight:700; line-height:1; margin-bottom:.2rem; }
+  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+  @media (max-width:620px){ .cards{ grid-template-columns:1fr; } h1{ font-size:1.9rem; } }
+  .card{ display:block; text-decoration:none; color:inherit; background:#fff; border:1px solid var(--line);
+         border-radius:14px; padding:1.5rem 1.5rem 1.4rem; transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+  .card:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(24,40,80,.10); border-color:#c7d6ee; }
+  .card.primary{ background:linear-gradient(135deg,#1f6feb,#1656c4); border-color:#1656c4; color:#fff; }
+  .card h2{ font-size:1.2rem; margin:.1rem 0 .4rem; }
+  .card p{ margin:0; font-size:.93rem; color:var(--muted); }
+  .card.primary p{ color:#dbe7fb; }
+  .card .go{ margin-top:1rem; font-weight:600; font-size:.92rem; }
+  .card.primary .go{ color:#fff; }
+  .card:not(.primary) .go{ color:var(--accent); }
+  .note{ margin:2.6rem 0 0; font-size:.92rem; color:#36425c; background:#fff;
+         border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px; padding:1rem 1.2rem; }
+  footer{ margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(--line); color:var(--muted); font-size:.82rem; }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">NSF Technology, Innovation &amp; Partnerships</p>
+    <h1>The TIP Programs Knowledge Graph</h1>
+    <p class="lede">NSF's TIP directorate runs dozens of programs. This tool turns that landscape into one
+      interactive map — showing which programs feed into each other, fund the same researchers, and serve
+      the same communities. <strong>Every connection traces to a checkable NSF source.</strong></p>
+
+    <div class="stats">
+      <div><b>58</b>programs mapped</div>
+      <div><b>7</b>kinds of evidence-backed links</div>
+      <div><b>10</b>statutory Key Technology Areas</div>
+    </div>
+
+    <div class="cards">
+      <a class="card primary" href="graph.html">
+        <h2>Explore the interactive graph</h2>
+        <p>Filter, search, and click any program or connection to see the evidence behind it. Runs entirely in your browser.</p>
+        <div class="go">Open the graph &rarr;</div>
+      </a>
+      <a class="card" href="report.html">
+        <h2>Read the guide</h2>
+        <p>A plain-language walkthrough — what you're looking at, what every control does, and how to answer real questions. No technical background needed.</p>
+        <div class="go">Read the guide &rarr;</div>
+      </a>
+    </div>
+
+    <p class="note">New here? Open the guide first for a one-minute orientation, then jump into the graph.
+      Or just open the graph and click around — every line tells you why two programs are connected.</p>
+
+    <footer>
+      An independent, evidence-backed visualization of publicly available NSF program information.
+      Each relationship is grounded in NSF's own solicitations, announcements, and award records — not opinion.
+      <strong>This is not an official NSF product.</strong>
+    </footer>
+  </main>
+</body>
+</html>
