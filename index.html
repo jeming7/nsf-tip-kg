@@ -5,71 +5,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NSF TIP Knowledge Graph</title>
 <meta name="description" content="An interactive, evidence-backed knowledge graph of NSF Technology, Innovation and Partnerships (TIP) programs — every connection traces to a checkable NSF source.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
 <style>
-  :root{ --ink:#16203a; --muted:#5b6675; --line:#e3e8ef; --accent:#1f6feb; }
-  *{ box-sizing:border-box; }
-  body{ margin:0; color:var(--ink);
-        font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-        background:linear-gradient(180deg,#f7f9fc 0%,#eef3fa 100%); min-height:100vh; }
-  .wrap{ max-width:880px; margin:0 auto; padding:4.5rem 1.25rem 4rem; }
-  .eyebrow{ text-transform:uppercase; letter-spacing:.12em; font-size:.78rem; font-weight:700;
-            color:var(--accent); margin:0 0 .8rem; }
-  h1{ font-size:2.4rem; line-height:1.15; letter-spacing:-.02em; margin:0 0 1rem; }
-  .lede{ font-size:1.15rem; color:#36425c; max-width:42rem; margin:0 0 1.2rem; }
-  .stats{ display:flex; flex-wrap:wrap; gap:1.4rem; margin:1.6rem 0 2.6rem; color:var(--muted); font-size:.9rem; }
-  .stats b{ display:block; font-size:1.5rem; color:var(--ink); font-weight:700; line-height:1; margin-bottom:.2rem; }
-  .cards{ display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
-  @media (max-width:620px){ .cards{ grid-template-columns:1fr; } h1{ font-size:1.9rem; } }
-  .card{ display:block; text-decoration:none; color:inherit; background:#fff; border:1px solid var(--line);
-         border-radius:14px; padding:1.5rem 1.5rem 1.4rem; transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
-  .card:hover{ transform:translateY(-3px); box-shadow:0 12px 30px rgba(24,40,80,.10); border-color:#c7d6ee; }
-  .card.primary{ background:linear-gradient(135deg,#1f6feb,#1656c4); border-color:#1656c4; color:#fff; }
-  .card h2{ font-size:1.2rem; margin:.1rem 0 .4rem; }
-  .card p{ margin:0; font-size:.93rem; color:var(--muted); }
-  .card.primary p{ color:#dbe7fb; }
-  .card .go{ margin-top:1rem; font-weight:600; font-size:.92rem; }
-  .card.primary .go{ color:#fff; }
-  .card:not(.primary) .go{ color:var(--accent); }
-  .note{ margin:2.6rem 0 0; font-size:.92rem; color:#36425c; background:#fff;
-         border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px; padding:1rem 1.2rem; }
-  footer{ margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(--line); color:var(--muted); font-size:.82rem; }
+  /* hero + landing-specific */
+  .hero{ max-width:var(--maxw); margin:0 auto; padding:clamp(2.2rem,5vw,3.6rem) clamp(1rem,3vw,2rem) 1rem; }
+  .hero h1{ font-size:clamp(2rem,5vw,2.85rem); line-height:1.08; letter-spacing:-.025em; margin:0 0 1rem; max-width:18ch; }
+  .hero .lede{ font-size:clamp(1.05rem,2.2vw,1.18rem); color:#2c3b54; max-width:44rem; margin:0 0 1.6rem; }
+  .hero .lede strong{ color:var(--ink); }
+  .actions{ display:flex; flex-wrap:wrap; gap:.75rem; margin:0 0 1.6rem; }
+  .strip{ display:flex; flex-wrap:wrap; align-items:center; gap:.55rem .9rem;
+          font-size:.86rem; color:var(--slate); border-top:1px solid var(--line);
+          border-bottom:1px solid var(--line); padding:.85rem 0; margin-bottom:0; }
+  .strip b{ color:var(--ink); font-weight:700; }
+  .strip .dot{ color:var(--gold); font-weight:700; }
+  .strip .src{ color:var(--slate-light); }
+
+  /* preview window */
+  .preview{ max-width:var(--maxw); margin:1.6rem auto 0; padding:0 clamp(1rem,3vw,2rem); }
+  .window{ border:1px solid var(--line); border-radius:12px; overflow:hidden;
+           box-shadow:0 24px 60px -24px rgba(14,23,38,.35), 0 4px 14px -8px rgba(14,23,38,.2);
+           background:#fff; }
+  .window .bar{ display:flex; align-items:center; gap:.45rem; padding:.6rem .9rem;
+                background:#0e1726; border-bottom:1px solid #1f2b41; }
+  .window .bar i{ width:11px; height:11px; border-radius:50%; background:#37445d; }
+  .window .bar .url{ margin-left:.6rem; color:#9fb3d1; font-size:.74rem;
+                     background:rgba(255,255,255,.06); padding:.18rem .6rem; border-radius:5px; }
+  .window a.shot{ display:block; position:relative; }
+  .window img{ display:block; width:100%; height:auto; }
+  .window .open-overlay{ position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center;
+        padding:1.4rem; background:linear-gradient(180deg,rgba(14,23,38,0) 55%,rgba(14,23,38,.12)); opacity:0; transition:opacity .15s; }
+  .window a.shot:hover .open-overlay{ opacity:1; }
+  .window .open-overlay span{ background:var(--blue); color:#fff; font-weight:600; font-size:.9rem;
+        padding:.6rem 1rem; border-radius:6px; box-shadow:0 6px 18px rgba(37,99,235,.4); }
+  .caption{ text-align:center; color:var(--slate-light); font-size:.82rem; margin:.8rem 0 0; }
+
+  /* answers section */
+  .answers{ max-width:var(--maxw); margin:0 auto; padding:clamp(2.6rem,5vw,4rem) clamp(1rem,3vw,2rem) 1rem; }
+  .answers h2{ font-size:1.5rem; letter-spacing:-.02em; margin:.2rem 0 .4rem; }
+  .answers .sub{ color:var(--slate); margin:0 0 1.6rem; max-width:42rem; }
+  .qgrid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+  @media (max-width:620px){ .qgrid{ grid-template-columns:1fr; } }
+  .qcard{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+          padding:1.1rem 1.2rem; display:flex; gap:.85rem; align-items:flex-start;
+          text-decoration:none; color:inherit; transition:border-color .12s, box-shadow .12s, transform .1s; }
+  .qcard:hover{ border-color:#c8d4e6; box-shadow:0 10px 24px -16px rgba(14,23,38,.4); transform:translateY(-2px); }
+  .qcard .q{ font-weight:600; color:var(--ink); line-height:1.4; }
+  .qcard .how{ display:block; margin-top:.35rem; font-size:.85rem; color:var(--slate); font-weight:400; }
+  .qcard .ix{ flex:none; width:26px; height:26px; border-radius:6px; background:var(--gold-soft);
+              color:var(--gold); display:grid; place-items:center; font-weight:700; font-size:.85rem; }
 </style>
 </head>
 <body>
-  <main class="wrap">
-    <p class="eyebrow">NSF Technology, Innovation &amp; Partnerships</p>
-    <h1>The TIP Programs Knowledge Graph</h1>
-    <p class="lede">NSF's TIP directorate runs dozens of programs. This tool turns that landscape into one
-      interactive map — showing which programs feed into each other, fund the same researchers, and serve
-      the same communities. <strong>Every connection traces to a checkable NSF source.</strong></p>
 
-    <div class="stats">
-      <div><b>58</b>programs mapped</div>
-      <div><b>7</b>kinds of evidence-backed links</div>
-      <div><b>10</b>statutory Key Technology Areas</div>
-    </div>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="mark"></span>NSF TIP <span class="sub">Knowledge Graph</span></a>
+    <nav>
+      <a href="graph.html">Graph</a>
+      <a href="report.html">Guide</a>
+      <a href="sources.html">Data Sources</a>
+    </nav>
+    <span class="spacer"></span>
+    <span class="indep">Independent · not an official NSF site</span>
+  </header>
 
-    <div class="cards">
-      <a class="card primary" href="graph.html">
-        <h2>Explore the interactive graph</h2>
-        <p>Filter, search, and click any program or connection to see the evidence behind it. Runs entirely in your browser.</p>
-        <div class="go">Open the graph &rarr;</div>
-      </a>
-      <a class="card" href="report.html">
-        <h2>Read the guide</h2>
-        <p>A plain-language walkthrough — what you're looking at, what every control does, and how to answer real questions. No technical background needed.</p>
-        <div class="go">Read the guide &rarr;</div>
-      </a>
-    </div>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">NSF Technology, Innovation &amp; Partnerships</p>
+      <h1>See how NSF&rsquo;s TIP programs actually connect.</h1>
+      <p class="lede">TIP runs dozens of programs. This tool maps them into one interactive network —
+        which feed into each other, fund the same researchers, and serve the same communities.
+        <strong>Every connection traces to a checkable NSF source.</strong></p>
+      <div class="actions">
+        <a class="btn btn-primary" href="graph.html">Open Interactive Graph →</a>
+        <a class="btn btn-secondary" href="report.html">Read Guide</a>
+      </div>
+      <div class="strip">
+        <span><b>58</b> programs</span><span class="dot">·</span>
+        <span><b>7</b> relationship types</span><span class="dot">·</span>
+        <span><b>10</b> statutory KTAs</span><span class="dot">·</span>
+        <span class="src">Built from NSF solicitations, announcements &amp; award records</span>
+      </div>
+    </section>
 
-    <p class="note">New here? Open the guide first for a one-minute orientation, then jump into the graph.
-      Or just open the graph and click around — every line tells you why two programs are connected.</p>
+    <section class="preview">
+      <div class="window">
+        <div class="bar"><i></i><i></i><i></i><span class="url">jeming7.github.io/nsf-tip-kg/graph.html</span></div>
+        <a class="shot" href="graph.html" aria-label="Open the interactive graph">
+          <img src="assets/graph-preview.png" alt="The interactive TIP knowledge graph: programs as nodes, evidence-backed relationships as colored edges, with filter controls." loading="eager">
+          <span class="open-overlay"><span>Open Interactive Graph →</span></span>
+        </a>
+      </div>
+      <p class="caption">The live tool — filter, search, and click any program or connection to read the evidence behind it.</p>
+    </section>
 
-    <footer>
-      An independent, evidence-backed visualization of publicly available NSF program information.
-      Each relationship is grounded in NSF's own solicitations, announcements, and award records — not opinion.
-      <strong>This is not an official NSF product.</strong>
-    </footer>
+    <section class="answers">
+      <p class="eyebrow">What can I answer with this?</p>
+      <h2>Questions the graph is built to answer</h2>
+      <p class="sub">Each one is a few clicks away — and every answer shows the NSF source it rests on.</p>
+      <div class="qgrid">
+        <a class="qcard" href="graph.html">
+          <span class="ix">?</span>
+          <span><span class="q">Which TIP programs connect through shared solicitations?</span>
+            <span class="how">Turn on the red &ldquo;Solicitation reference&rdquo; edges.</span></span>
+        </a>
+        <a class="qcard" href="graph.html">
+          <span class="ix">?</span>
+          <span><span class="q">Which programs align with a specific Key Technology Area?</span>
+            <span class="how">Filter by one of the 10 statutory KTAs.</span></span>
+        </a>
+        <a class="qcard" href="graph.html">
+          <span class="ix">?</span>
+          <span><span class="q">What evidence supports a given relationship?</span>
+            <span class="how">Click any edge to see the source, quote, and confidence.</span></span>
+        </a>
+        <a class="qcard" href="graph.html">
+          <span class="ix">?</span>
+          <span><span class="q">Which programs serve similar audiences?</span>
+            <span class="how">Use operational-attribute edges and audience filters.</span></span>
+        </a>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p class="disclaimer">
+        <strong>NSF TIP Knowledge Graph.</strong> An independent visualization of publicly available NSF program
+        information. Relationships are grounded in NSF&rsquo;s own solicitations, announcements, and award records —
+        click any connection in the graph to see its source. <strong>This is not an official NSF product.</strong>
+      </p>
+      <span class="spacer"></span>
+      <a href="graph.html">Graph</a> <a href="report.html">Guide</a> <a href="sources.html">Data Sources</a>
+    </div>
+  </footer>
+
 </body>
 </html>

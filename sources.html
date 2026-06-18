@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Sources — NSF TIP Knowledge Graph</title>
+<meta name="description" content="Where the NSF TIP Knowledge Graph gets its data: NSF solicitations, announcements, and award records — with every relationship traceable to a source.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .src-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin:1.6rem 0 0; }
+  @media (max-width:620px){ .src-grid{ grid-template-columns:1fr; } }
+  .src{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:1.2rem 1.3rem; }
+  .src h3{ margin:.1rem 0 .4rem; font-size:1.02rem; }
+  .src p{ margin:0; color:var(--slate); font-size:.92rem; }
+  .src .tag{ display:inline-block; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+             color:var(--gold); background:var(--gold-soft); padding:.18rem .5rem; border-radius:999px; margin-bottom:.6rem; }
+  .lead{ font-size:1.12rem; color:#2c3b54; max-width:44rem; }
+  .principle{ background:#fff; border:1px solid var(--line); border-left:3px solid var(--gold);
+              border-radius:var(--radius); padding:1.1rem 1.3rem; margin:1.8rem 0; }
+  .principle b{ color:var(--ink); }
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="mark"></span>NSF TIP <span class="sub">Knowledge Graph</span></a>
+    <nav>
+      <a href="graph.html">Graph</a>
+      <a href="report.html">Guide</a>
+      <a href="sources.html" class="active">Data Sources</a>
+    </nav>
+    <span class="spacer"></span>
+    <span class="indep">Independent · not an official NSF site</span>
+  </header>
+
+  <main class="page narrow">
+    <p class="eyebrow">Provenance</p>
+    <h1 style="font-size:clamp(1.8rem,4vw,2.3rem); letter-spacing:-.02em; margin:.1rem 0 1rem;">Where the data comes from</h1>
+    <p class="lead">Every node and every connection in this graph is grounded in NSF&rsquo;s own public materials —
+      not opinion or inference alone. Below is exactly what was used, and how each kind of relationship is sourced.</p>
+
+    <div class="principle">
+      <b>One rule:</b> no connection is a hunch. Each relationship carries a specific, checkable source —
+      a solicitation, an announcement quote, or an award record — and you can click any edge in the
+      <a href="graph.html">interactive graph</a> to read it.
+    </div>
+
+    <div class="src-grid">
+      <div class="src">
+        <span class="tag">Programs &amp; structure</span>
+        <h3>NSF program solicitations &amp; program pages</h3>
+        <p>The 58 programs, their lifecycle status, eligibility, required partners, tracks/phases, and target
+          audiences come from the full official solicitation pages and NSF program/initiative pages.</p>
+      </div>
+      <div class="src">
+        <span class="tag">Directed &amp; reference links</span>
+        <h3>Official announcements &amp; Dear Colleague Letters</h3>
+        <p>Directed pathways and solicitation references are drawn from explicit language in NSF announcements
+          (e.g. &ldquo;open to current and former SBIR/STTR awardees&rdquo;) — each carries a verbatim quote.</p>
+      </div>
+      <div class="src">
+        <span class="tag">Shared researchers</span>
+        <h3>NSF award records</h3>
+        <p>Award co-occurrence — when two programs funded the same people or institutions — is computed from
+          NSF&rsquo;s public award data, then size-normalized so high-volume programs don&rsquo;t dominate.</p>
+      </div>
+      <div class="src">
+        <span class="tag">Technology areas</span>
+        <h3>Statutory Key Technology Areas</h3>
+        <p>The 10 Key Technology Areas come from the CHIPS and Science Act, mapped to programs using NSF&rsquo;s own
+          technology tagging where available and program descriptions otherwise.</p>
+      </div>
+    </div>
+
+    <h2 class="prose" style="font-size:1.3rem; margin:2.6rem 0 .6rem; padding-top:1rem; border-top:1px solid var(--line);">How relationships are graded</h2>
+    <p style="color:var(--slate);">Each connection records <b>how</b> it was established, so you always know whether a human checked it:</p>
+    <ul style="color:#1f2a3d;">
+      <li><b>Curated</b> — directed pathways, each accepted in review against a quoted source. No quote, no arrow.</li>
+      <li><b>Validated</b> — solicitation references, verified against the official announcement text.</li>
+      <li><b>Auto-extracted</b> — operational, award-co-occurrence, text-similarity, and shared-domain links,
+        generated from structured fields and shown with their evidence and confidence.</li>
+    </ul>
+
+    <div class="principle" style="border-left-color:var(--blue);">
+      <b>A note on independence.</b> This is an independent research visualization built from publicly available
+      information. It is <b>not an official NSF product</b> and is not endorsed by NSF. For authoritative program
+      information, always refer to <a href="https://www.nsf.gov/tip" rel="noopener">nsf.gov</a>.
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p class="disclaimer">
+        <strong>NSF TIP Knowledge Graph.</strong> An independent visualization of publicly available NSF program
+        information. <strong>This is not an official NSF product.</strong>
+      </p>
+      <span class="spacer"></span>
+      <a href="graph.html">Graph</a> <a href="report.html">Guide</a> <a href="sources.html">Data Sources</a>
+    </div>
+  </footer>
+
+</body>
+</html>
